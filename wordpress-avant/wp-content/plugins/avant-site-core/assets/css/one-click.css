@@ -1,0 +1,100 @@
+/**
+ * Модальное окно «один клик» — визуал в линии с токенами темы (DESIGN.md / Webflow-like).
+ */
+.avant-ocb-modal[hidden] {
+    display: none !important;
+}
+
+.avant-ocb-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.avant-ocb-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 8, 8, 0.45);
+}
+
+.avant-ocb-modal__panel {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 28rem;
+    background: var(--avant-color-surface, #ffffff);
+    border: 1px solid var(--avant-color-border, #d8d8d8);
+    border-radius: var(--avant-radius-lg, 8px);
+    padding: 1.25rem 1.25rem 1rem;
+    box-shadow: var(--avant-shadow-elevated, 0 8px 30px rgba(0, 0, 0, 0.12));
+}
+
+.avant-ocb-modal__title {
+    margin: 0 0 1rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.04;
+    color: var(--avant-color-text, #080808);
+}
+
+.avant-ocb-field label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    color: var(--avant-color-text, #080808);
+}
+
+.avant-ocb-field input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.5rem 0.65rem;
+    border: 1px solid var(--avant-color-border, #d8d8d8);
+    border-radius: var(--avant-radius-sm, 4px);
+    font-family: var(--avant-font-sans, system-ui, sans-serif);
+    font-size: 1rem;
+}
+
+.avant-ocb-field + .avant-ocb-field {
+    margin-top: 0.75rem;
+}
+
+.avant-ocb-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+.avant-ocb-actions .button {
+    border-radius: var(--avant-radius-sm, 4px);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.avant-ocb-actions .button:hover {
+    transform: translateX(6px);
+}
+
+.avant-ocb-actions .button.button-primary {
+    background: var(--avant-color-accent, #146ef5);
+    border-color: var(--avant-color-accent, #146ef5);
+}
+
+.avant-ocb-actions .button.button-primary:hover {
+    background: var(--avant-color-accent-hover, #0055d4);
+    border-color: var(--avant-color-accent-hover, #0055d4);
+}
+
+.avant-ocb-message {
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+}

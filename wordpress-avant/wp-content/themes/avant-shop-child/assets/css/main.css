@@ -1,0 +1,464 @@
+/**
+ * Главная и общие блоки темы (референс Webflow / DESIGN.md).
+ */
+body {
+    font-family: var(--avant-font-sans);
+    color: var(--avant-color-text);
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+}
+
+.avant-hero,
+.avant-benefits,
+.avant-contacts {
+    padding: var(--avant-space-4) var(--avant-space-2);
+}
+
+.avant-hero__inner,
+.avant-benefits__inner,
+.avant-contacts__inner {
+    max-width: var(--avant-max-width);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.avant-hero {
+    background: var(--avant-color-surface);
+    border-bottom: 1px solid var(--avant-color-border);
+}
+
+.avant-hero__title {
+    font-size: clamp(2rem, 6vw, 5rem);
+    font-weight: 600;
+    line-height: 1.04;
+    letter-spacing: -0.05em;
+    margin: 0 0 var(--avant-space-2);
+    max-width: min(100%, 22rem);
+    color: var(--avant-color-text);
+}
+
+.avant-hero__lead {
+    color: var(--avant-color-muted);
+    font-size: clamp(1.125rem, 2.4vw, 1.25rem);
+    font-weight: 500;
+    line-height: 1.45;
+    max-width: 36rem;
+    margin: 0 0 var(--avant-space-3);
+}
+
+.avant-section-title {
+    font-size: clamp(1.75rem, 4vw, 3.5rem);
+    font-weight: 600;
+    line-height: 1.04;
+    margin: 0 0 var(--avant-space-2);
+    color: var(--avant-color-text);
+}
+
+.avant-benefits__list {
+    margin: 0;
+    padding-left: 1.25rem;
+    color: var(--avant-color-text);
+}
+
+.avant-benefits__item + .avant-benefits__item {
+    margin-top: var(--avant-space-1);
+}
+
+.avant-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--avant-radius-sm);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    border: 1px solid transparent;
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.avant-btn--primary {
+    background: var(--avant-color-accent);
+    color: var(--avant-color-accent-contrast);
+}
+
+.avant-btn--primary:focus-visible {
+    outline: 2px solid var(--avant-color-accent);
+    outline-offset: 2px;
+}
+
+.avant-btn--primary:hover {
+    background: var(--avant-color-accent-hover);
+    transform: translateX(6px);
+}
+
+.avant-hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--avant-space-2);
+    align-items: center;
+}
+
+.avant-btn--ghost {
+    background: transparent;
+    color: var(--avant-color-text);
+    border-color: var(--avant-color-border);
+}
+
+.avant-btn--ghost:hover {
+    border-color: var(--avant-color-border-hover);
+    background: rgba(8, 8, 8, 0.04);
+    transform: translateX(6px);
+}
+
+.avant-btn--ghost:focus-visible {
+    outline: 2px solid var(--avant-color-accent);
+    outline-offset: 2px;
+}
+
+.avant-benefits {
+    background: var(--avant-color-bg);
+}
+
+.avant-contacts__lead {
+    color: var(--avant-color-muted);
+    margin: 0 0 var(--avant-space-3);
+    max-width: 40rem;
+    font-size: clamp(1rem, 2.2vw, 1.1rem);
+}
+
+.avant-contacts__channels {
+    list-style: none;
+    margin: 0 0 var(--avant-space-3);
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--avant-space-3);
+}
+
+.avant-contacts__channels li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.avant-contacts__label {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.09375rem;
+    line-height: 1.3;
+    color: var(--avant-color-muted);
+}
+
+.avant-contacts__value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--avant-color-accent);
+    text-decoration: none;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.avant-contacts__value:hover {
+    color: var(--avant-color-accent-hover);
+    transform: translateX(4px);
+}
+
+.avant-contacts__form {
+    max-width: 36rem;
+}
+
+.avant-contact-form-wrap {
+    margin-top: var(--avant-space-2);
+}
+
+.avant-contact-form {
+    position: relative;
+}
+
+.avant-contact-form__notice {
+    padding: var(--avant-space-2);
+    border-radius: var(--avant-radius-sm);
+    margin: 0 0 var(--avant-space-2);
+}
+
+.avant-contact-form__notice--success {
+    background: rgba(0, 215, 34, 0.12);
+    color: #065f16;
+}
+
+.avant-contact-form__notice--error {
+    background: rgba(238, 29, 54, 0.1);
+    color: #9f1239;
+}
+
+.avant-contact-form__field {
+    margin: 0 0 var(--avant-space-2);
+}
+
+.avant-contact-form__field label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.35rem;
+    color: var(--avant-color-text);
+}
+
+.avant-contact-form__field input,
+.avant-contact-form__field textarea {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    border: 1px solid var(--avant-color-border);
+    border-radius: var(--avant-radius-sm);
+    padding: 0.65rem 0.85rem;
+    font: inherit;
+    background: var(--avant-color-surface);
+    color: var(--avant-color-text);
+}
+
+.avant-contact-form__field textarea {
+    resize: vertical;
+    min-height: 8rem;
+}
+
+.avant-contact-form__field input:focus-visible,
+.avant-contact-form__field textarea:focus-visible {
+    outline: 2px solid var(--avant-color-accent);
+    outline-offset: 1px;
+}
+
+.avant-contact-form__field--honeypot {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.avant-contact-form__req {
+    color: var(--avant-color-orange);
+}
+
+.avant-contact-form__consent {
+    font-size: 0.875rem;
+    color: var(--avant-color-muted);
+    line-height: 1.45;
+    margin: 0 0 var(--avant-space-2);
+}
+
+.avant-contact-form__consent a {
+    color: var(--avant-color-accent);
+}
+
+.avant-contact-form__submit {
+    margin: 0;
+}
+
+.avant-contact-form__submit .avant-btn {
+    border: none;
+    cursor: pointer;
+    font: inherit;
+}
+
+@media (min-width: 992px) {
+    .avant-hero,
+    .avant-benefits,
+    .avant-contacts,
+    .avant-home-section {
+        padding-left: var(--avant-space-3);
+        padding-right: var(--avant-space-3);
+    }
+}
+
+.avant-shop-wrap {
+    max-width: var(--avant-max-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--avant-space-2);
+    padding-right: var(--avant-space-2);
+}
+
+.avant-hero-slider {
+    margin-bottom: var(--avant-space-3);
+}
+
+.avant-hero-slider__track {
+    display: flex;
+    gap: var(--avant-space-2);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 0.25rem;
+}
+
+.avant-hero-slider__slide {
+    flex: 0 0 min(100%, 28rem);
+    margin: 0;
+    scroll-snap-align: start;
+}
+
+.avant-hero-slider__img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--avant-radius-lg);
+    object-fit: cover;
+}
+
+.avant-home-section {
+    padding: var(--avant-space-4) var(--avant-space-2);
+}
+
+.avant-home-section__inner {
+    max-width: var(--avant-max-width);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.avant-catalog-teaser {
+    background: var(--avant-color-bg);
+    border-bottom: 1px solid var(--avant-color-border);
+}
+
+.avant-catalog-teaser__lead,
+.avant-featured-products__lead {
+    color: var(--avant-color-muted);
+    margin: 0 0 var(--avant-space-3);
+    max-width: 40rem;
+}
+
+.avant-catalog-teaser__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--avant-space-2);
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+    .avant-catalog-teaser__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 992px) {
+    .avant-catalog-teaser__grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.avant-catalog-teaser__card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    height: 100%;
+    padding: var(--avant-space-3);
+    border-radius: var(--avant-radius-lg);
+    border: 1px solid var(--avant-color-border);
+    background: var(--avant-color-surface);
+    text-decoration: none;
+    color: var(--avant-color-text);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    transition:
+        box-shadow 0.2s ease,
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.avant-catalog-teaser__card:hover {
+    border-color: var(--avant-color-border-hover);
+    box-shadow: var(--avant-shadow-elevated);
+    transform: translateX(4px);
+}
+
+.avant-catalog-teaser__name {
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.avant-catalog-teaser__meta {
+    font-size: 0.9rem;
+    color: var(--avant-color-muted);
+}
+
+.avant-featured-products {
+    background: var(--avant-color-surface);
+    border-bottom: 1px solid var(--avant-color-border);
+}
+
+.avant-featured-products__shortcode {
+    margin-bottom: var(--avant-space-3);
+}
+
+.avant-featured-products__more {
+    margin: 0;
+    text-align: center;
+}
+
+.avant-site-footer {
+    background: var(--avant-color-text);
+    color: var(--avant-color-surface);
+    padding: var(--avant-space-3) var(--avant-space-2);
+    margin-top: var(--avant-space-4);
+}
+
+.avant-site-footer__inner {
+    max-width: var(--avant-max-width);
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--avant-space-2);
+}
+
+@media (min-width: 768px) {
+    .avant-site-footer__inner {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.avant-site-footer__links,
+.avant-site-footer__menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--avant-space-2);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.avant-site-footer__links a,
+.avant-site-footer__menu a {
+    color: var(--avant-color-surface);
+    text-decoration: none;
+    font-weight: 500;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.avant-site-footer__links a:hover,
+.avant-site-footer__menu a:hover {
+    opacity: 0.92;
+    transform: translateX(6px);
+}
+
+.avant-site-footer__copy {
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.72);
+}

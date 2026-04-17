@@ -1,0 +1,62 @@
+/**
+ * Дизайн-токены по референсу: design-md/webflow/DESIGN.md (Webflow).
+ * Шрифт: Inter (Google Fonts) — практичная замена WF Visual Sans Variable из референса.
+ */
+:root {
+    --avant-font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+    --avant-font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+
+    /* Primary & text */
+    --avant-color-text: #080808;
+    --avant-color-text-secondary: #222222;
+    --avant-color-text-tertiary: #363636;
+    --avant-color-muted: #5a5a5a;
+    --avant-color-placeholder: #ababab;
+
+    --avant-color-surface: #ffffff;
+    --avant-color-bg: #fafafa;
+
+    --avant-color-border: #d8d8d8;
+    --avant-color-border-hover: #898989;
+
+    /* Webflow Blue + variants */
+    --avant-color-accent: #146ef5;
+    --avant-color-accent-light: #3b89ff;
+    --avant-color-accent-dark: #006acc;
+    --avant-color-accent-hover: #0055d4;
+    --avant-color-accent-contrast: #ffffff;
+
+    /* Secondary accents (иллюстрации / акценты, не основной CTA) */
+    --avant-color-purple: #7a3dff;
+    --avant-color-pink: #ed52cb;
+    --avant-color-green: #00d722;
+    --avant-color-orange: #ff6b00;
+    --avant-color-yellow: #ffae13;
+    --avant-color-red: #ee1d36;
+
+    /* Радиусы: 4–8px, без «мыльных» 12px */
+    --avant-radius-sm: 4px;
+    --avant-radius: 6px;
+    --avant-radius-lg: 8px;
+
+    /* 5-слойная тень из референса */
+    --avant-shadow-elevated:
+        0 84px 24px rgba(0, 0, 0, 0),
+        0 54px 22px rgba(0, 0, 0, 0.01),
+        0 30px 18px rgba(0, 0, 0, 0.04),
+        0 13px 13px rgba(0, 0, 0, 0.08),
+        0 3px 7px rgba(0, 0, 0, 0.09);
+
+    /* Отступы (близко к шкале 4 / 8 / 12 / 16 / 24px) */
+    --avant-space-1: 0.5rem;
+    --avant-space-2: 1rem;
+    --avant-space-3: 1.5rem;
+    --avant-space-4: 2.5rem;
+
+    --avant-max-width: 72rem;
+
+    /* Брейкпоинты референса */
+    --avant-break-sm: 479px;
+    --avant-break-md: 768px;
+    --avant-break-lg: 992px;
+}
