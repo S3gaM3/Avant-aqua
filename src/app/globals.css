@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+:root {
+  --brand-primary: #1f2430;
+  --brand-accent: #b68a52;
+  --brand-text: #1f2430;
+  --brand-muted: #616673;
+  --brand-border: #d8dce4;
+  --brand-surface: #f4f6fa;
+  --brand-surface-alt: #eceff5;
+  --brand-inverse: #ffffff;
+  --brand-hero: #32356f;
+  --background: #ffffff;
+  --foreground: var(--brand-text);
+  --state-success: #1f8a54;
+  --state-warning: #a56a00;
+  --state-danger: #b3282d;
+  --focus-ring: #8ea2d1;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-pill: 999px;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --container-sm: 720px;
+  --container-md: 960px;
+  --container-lg: 1120px;
+  --container-xl: 1280px;
+  --duration-fast: 120ms;
+  --duration-base: 180ms;
+  --duration-slow: 280ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --shadow-card: rgba(16, 24, 40, 0.02) 0 2px 4px, rgba(16, 24, 40, 0.06) 0 8px 20px;
+  --shadow-card-hover: rgba(16, 24, 40, 0.04) 0 4px 8px, rgba(16, 24, 40, 0.1) 0 16px 28px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-text: var(--brand-text);
+  --color-brand-muted: var(--brand-muted);
+  --color-brand-border: var(--brand-border);
+  --color-brand-surface: var(--brand-surface);
+  --color-brand-surface-alt: var(--brand-surface-alt);
+  --color-brand-inverse: var(--brand-inverse);
+  --color-brand-hero: var(--brand-hero);
+  --color-state-success: var(--state-success);
+  --color-state-warning: var(--state-warning);
+  --color-state-danger: var(--state-danger);
+  --radius-xs: var(--radius-xs);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-display);
+}
+
+@utility shadow-card {
+  box-shadow: var(--shadow-card);
+}
+
+@utility shadow-card-hover {
+  box-shadow: var(--shadow-card-hover);
+}
+
+@utility focus-ring {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), system-ui, sans-serif;
+  line-height: 1.45;
+}
+
+.font-heading {
+  font-family: var(--font-body), system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.allpools-placeholder {
+  background:
+    linear-gradient(135deg, #e9edf4 25%, transparent 25%) -10px 0/20px 20px,
+    linear-gradient(225deg, #e9edf4 25%, transparent 25%) -10px 0/20px 20px,
+    linear-gradient(315deg, #e9edf4 25%, transparent 25%) 0 0/20px 20px,
+    linear-gradient(45deg, #e9edf4 25%, #f7f9fc 25%) 0 0/20px 20px;
+}
+
+.ds-section {
+  padding-block: clamp(2.75rem, 5vw, 5rem);
+}
+
+.ds-title {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: clamp(1.75rem, 2.8vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--brand-primary);
+}
+
+.ds-subtitle {
+  margin-top: 0.75rem;
+  color: var(--brand-muted);
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+}
