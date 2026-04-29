@@ -4,6 +4,7 @@ import { Section } from "@/components/ui/Section";
 import { PageIntro } from "@/components/sections/PageIntro";
 import { LeadForm } from "@/components/forms/LeadForm";
 import { siteConfig } from "@/lib/site-config";
+import { applyRussianNbsp } from "@/lib/ru-typography";
 
 export const metadata: Metadata = {
   title: "Контакты",
@@ -15,9 +16,20 @@ const offices = [
   { city: "Краснодар", phone: "+7 (916) 645-09-83", note: "Региональный офис" },
   { city: "Геленджик", phone: "8 800 555-70-55", note: "Проектный офис" },
   { city: "Крым", phone: "+7 (978) 818-28-26", note: "Склад и логистика" },
-];
+].map((office) => ({
+  ...office,
+  city: applyRussianNbsp(office.city),
+  note: applyRussianNbsp(office.note),
+}));
 
-export default function ContactsPage() {
+type Props = {
+  searchParams?: Promise<{ message?: string }>;
+};
+
+export default async function ContactsPage({ searchParams }: Props) {
+  const params = searchParams ? await searchParams : undefined;
+  const defaultMessage = typeof params?.message === "string" ? params.message : "";
+
   return (
     <Section className="bg-brand-surface">
       <PageIntro title="Контакты" current="Контакты" />
@@ -38,7 +50,7 @@ export default function ContactsPage() {
           <p className="mt-4 text-sm text-brand-muted">{siteConfig.address}</p>
         </Card>
         <Card className="bg-brand-surface p-6">
-          <LeadForm submitLabel="Отправить сообщение" />
+          <LeadForm submitLabel="Отправить сообщение" defaultMessage={defaultMessage} />
         </Card>
       </div>
 

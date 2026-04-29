@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ProductCard } from "@/components/catalog/ProductCard";
 import { trackEvent } from "@/lib/analytics";
+import { applyRussianNbsp } from "@/lib/ru-typography";
 import type { Product, ProductCategory } from "@/lib/types/commerce";
 
 type SortKey = "popular" | "priceAsc" | "priceDesc" | "name";
@@ -25,6 +26,7 @@ export function CatalogClient({
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(0);
   const listTrackedRef = useRef(false);
+  const searchTrackTimeoutRef = useRef<number | null>(null);
 
   const priceCap = useMemo(
     () => Math.max(...products.map((p) => getNumericPrice(p.price)), 0),
@@ -69,9 +71,17 @@ export function CatalogClient({
     }
   }, [filtered]);
 
+  useEffect(() => {
+    return () => {
+      if (searchTrackTimeoutRef.current !== null) {
+        window.clearTimeout(searchTrackTimeoutRef.current);
+      }
+    };
+  }, []);
+
   return (
     <section className="mt-16">
-      <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
+      <div className="grid gap-6 lg:grid-cols-[280px_1fr] xl:grid-cols-[300px_1fr]">
         <aside className="rounded-[8px] border border-brand-border bg-white p-5 shadow-card">
           <h2 className="font-heading text-2xl font-bold text-brand-primary">Фильтры</h2>
           <div className="mt-4 space-y-3">
@@ -81,10 +91,16 @@ export function CatalogClient({
                 const value = e.target.value;
                 setQuery(value);
                 const term = value.trim();
+                if (searchTrackTimeoutRef.current !== null) {
+                  window.clearTimeout(searchTrackTimeoutRef.current);
+                }
                 if (term.length >= 2) {
-                  trackEvent("search", {
-                    search_term: term,
-                  });
+                  searchTrackTimeoutRef.current = window.setTimeout(() => {
+                    trackEvent("search", {
+                      search_term: term,
+                    });
+                    searchTrackTimeoutRef.current = null;
+                  }, 250);
                 }
               }}
               placeholder="Поиск по каталогу..."
@@ -107,14 +123,15 @@ export function CatalogClient({
               onChange={(e) => setSort(e.target.value as SortKey)}
               className="w-full rounded-[6px] border border-brand-border px-3 py-2"
             >
-              <option value="popular">По популярности</option>
+              <option value="popular">{applyRussianNbsp("По популярности")}</option>
               <option value="priceAsc">Сначала дешевые</option>
               <option value="priceDesc">Сначала дорогие</option>
-              <option value="name">По названию</option>
+              <option value="name">{applyRussianNbsp("По названию")}</option>
             </select>
             <div className="rounded-[6px] border border-brand-border bg-brand-surface p-3 text-sm">
               <p>
-                Цена: от {Math.round(boundedMinPrice)} ₽ до {Math.round(effectiveMaxPrice)} ₽
+                {applyRussianNbsp("Цена: от")} {Math.round(boundedMinPrice)} ₽{" "}
+                {applyRussianNbsp("до")} {Math.round(effectiveMaxPrice)} ₽
               </p>
               <div className="mt-2 grid grid-cols-2 gap-2">
                 <input
@@ -151,17 +168,21 @@ export function CatalogClient({
         </aside>
 
         <div>
-          <div className="mb-4 flex items-center justify-between rounded-[8px] border border-brand-border bg-white px-4 py-3 text-sm">
-            <span className="text-brand-muted">Найдено товаров: {filtered.length}</span>
-            <span className="text-brand-muted">ALLPOOLS catalog layout</span>
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-2 rounded-[8px] border border-brand-border bg-white px-4 py-3 text-sm">
+            <span className="text-brand-muted">
+              {applyRussianNbsp("Найдено товаров:")} {filtered.length}
+            </span>
+            <span className="text-brand-muted">Каталог AVANT AQUA</span>
           </div>
-          <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="grid auto-rows-fr grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-8">
             {filtered.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}
           </div>
           {filtered.length === 0 ? (
-            <p className="mt-6 text-sm text-brand-muted">По фильтрам товары не найдены.</p>
+            <p className="mt-6 text-sm text-brand-muted">
+              {applyRussianNbsp("По фильтрам товары не найдены.")}
+            </p>
           ) : null}
         </div>
       </div>

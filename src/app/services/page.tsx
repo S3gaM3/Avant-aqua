@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
 import { PageIntro } from "@/components/sections/PageIntro";
+import { applyRussianNbsp } from "@/lib/ru-typography";
 
 export const metadata: Metadata = {
   title: "Услуги",
-  description: "Полный список услуг в стиле allpools.",
+  description: "Полный список услуг AVANT AQUA.",
 };
 
 const services = [
@@ -21,7 +22,7 @@ const services = [
   "Бассейн с подъемным дном",
   "Флоатинг",
   "Сервисное обслуживание",
-];
+].map(applyRussianNbsp);
 
 export default function ServicesPage() {
   return (
@@ -29,9 +30,11 @@ export default function ServicesPage() {
       <PageIntro
         title="Услуги"
         current="Услуги"
-        description="Полный спектр услуг проектирования и строительства бассейнов, саун и SPA-зон."
+        description={applyRussianNbsp(
+          "Полный спектр услуг проектирования и строительства бассейнов, саун и SPA-зон.",
+        )}
       />
-      <section className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <section className="mt-8 grid auto-rows-fr grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4">
         {services.map((service) => (
           <Card key={service} className="p-4">
             <div className="allpools-placeholder rounded-[6px] border border-brand-border p-2">
@@ -39,7 +42,7 @@ export default function ServicesPage() {
             </div>
             <h2 className="mt-3 text-base font-semibold text-brand-primary">{service}</h2>
             <p className="mt-2 text-sm text-brand-muted">
-              Описание раздела и ключевые параметры проекта.
+              {applyRussianNbsp("Подбираем решение под задачу объекта, бюджет и сроки реализации.")}
             </p>
           </Card>
         ))}

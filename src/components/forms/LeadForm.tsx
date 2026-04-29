@@ -2,13 +2,20 @@
 
 import { useState } from "react";
 import { hasLeadErrors, type LeadErrors, type LeadPayload, validateLeadPayload } from "@/lib/lead";
+import { applyRussianNbsp } from "@/lib/ru-typography";
 
-export function LeadForm({ submitLabel = "Отправить сообщение" }: { submitLabel?: string }) {
+export function LeadForm({
+  submitLabel = "Отправить сообщение",
+  defaultMessage = "",
+}: {
+  submitLabel?: string;
+  defaultMessage?: string;
+}) {
   const [form, setForm] = useState<LeadPayload>({
     name: "",
     phone: "",
     email: "",
-    message: "",
+    message: defaultMessage,
     agree: false,
     website: "",
   });
@@ -30,7 +37,7 @@ export function LeadForm({ submitLabel = "Отправить сообщение"
     if (hasLeadErrors(nextErrors)) {
       setErrors(nextErrors);
       setSubmitState("error");
-      setSubmitMessage("Проверьте форму и исправьте ошибки.");
+      setSubmitMessage(applyRussianNbsp("Проверьте форму и исправьте ошибки"));
       return;
     }
 
@@ -54,12 +61,16 @@ export function LeadForm({ submitLabel = "Отправить сообщение"
           setErrors(data.errors);
         }
         setSubmitState("error");
-        setSubmitMessage(data.message ?? "Не удалось отправить форму.");
+        setSubmitMessage(
+          data.message
+            ? applyRussianNbsp(data.message)
+            : applyRussianNbsp("Не удалось отправить форму"),
+        );
         return;
       }
 
       setSubmitState("success");
-      setSubmitMessage("Заявка отправлена. Мы свяжемся с вами в ближайшее время.");
+      setSubmitMessage(applyRussianNbsp("Заявка отправлена. Мы свяжемся с вами в ближайшее время"));
       setForm({
         name: "",
         phone: "",
@@ -71,7 +82,7 @@ export function LeadForm({ submitLabel = "Отправить сообщение"
       setErrors({});
     } catch {
       setSubmitState("error");
-      setSubmitMessage("Ошибка сети. Попробуйте отправить форму ещё раз.");
+      setSubmitMessage(applyRussianNbsp("Ошибка сети. Попробуйте отправить форму ещё раз"));
     }
   };
 
@@ -182,10 +193,11 @@ export function LeadForm({ submitLabel = "Отправить сообщение"
           className="mt-1 h-4 w-4 rounded border-brand-border text-brand-accent"
         />
         <span>
-          Нажимая кнопку «{submitLabel}», вы соглашаетесь на обработку персональных данных в
-          соответствии с{" "}
+          {applyRussianNbsp(
+            `Нажимая кнопку «${submitLabel}», вы соглашаетесь на обработку персональных данных в соответствии с`,
+          )}{" "}
           <a href="/privacy" className="text-brand-accent underline hover:text-brand-primary">
-            политикой конфиденциальности
+            {applyRussianNbsp("политикой конфиденциальности")}
           </a>
           .
         </span>
@@ -201,7 +213,7 @@ export function LeadForm({ submitLabel = "Отправить сообщение"
         disabled={submitState === "loading"}
         className="w-full rounded-[6px] bg-brand-accent py-4 text-base font-semibold text-white shadow-card transition-transform hover:-translate-x-1.5 hover:bg-[#d24f0a] disabled:cursor-not-allowed disabled:opacity-50"
       >
-        {submitState === "loading" ? "Отправка..." : submitLabel}
+        {submitState === "loading" ? "Отправка…" : submitLabel}
       </button>
     </form>
   );

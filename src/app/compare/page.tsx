@@ -6,6 +6,7 @@ import { Section } from "@/components/ui/Section";
 import { PageIntro } from "@/components/sections/PageIntro";
 import { usePreferencesStore } from "@/lib/stores/preferences-store";
 import { formatRub } from "@/lib/format";
+import { applyRussianNbsp } from "@/lib/ru-typography";
 
 const ATTR_NAME_MAP: Record<string, string> = {
   performance: "Производительность",
@@ -43,13 +44,17 @@ function getMostFrequentValue(values: string[]): string | null {
 export default function ComparePage() {
   const compare = usePreferencesStore((s) => s.compare);
   const [onlyDiff, setOnlyDiff] = useState(false);
-  const normalizedRows = Array.from(
-    new Set(
-      compare
-        .flatMap((p) => (p.attributes ?? []).map((a) => normalizeAttrName(a.name)))
-        .filter(Boolean),
-    ),
-  ).sort((a, b) => a.localeCompare(b, "ru"));
+  const normalizedRows = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          compare
+            .flatMap((p) => (p.attributes ?? []).map((a) => normalizeAttrName(a.name)))
+            .filter(Boolean),
+        ),
+      ).sort((a, b) => a.localeCompare(b, "ru")),
+    [compare],
+  );
 
   const baseRows = useMemo(
     () => [
@@ -83,15 +88,28 @@ export default function ComparePage() {
     [compare, normalizedRows],
   );
 
-  const allRows = [...baseRows, ...attributeRows];
-  const rowsToShow = onlyDiff ? allRows.filter((row) => new Set(row.values).size > 1) : allRows;
+  const allRows = useMemo(() => [...baseRows, ...attributeRows], [baseRows, attributeRows]);
+  const rowStats = useMemo(
+    () =>
+      allRows.map((row) => {
+        const baseline = getMostFrequentValue(row.values);
+        const hasDiff = new Set(row.values).size > 1;
+        return { name: row.name, baseline, hasDiff };
+      }),
+    [allRows],
+  );
+  const rowStatsMap = useMemo(() => new Map(rowStats.map((item) => [item.name, item])), [rowStats]);
+  const rowsToShow = useMemo(
+    () => (onlyDiff ? allRows.filter((row) => rowStatsMap.get(row.name)?.hasDiff) : allRows),
+    [allRows, onlyDiff, rowStatsMap],
+  );
 
   return (
     <Section className="bg-brand-surface">
       <PageIntro title="Сравнение товаров" current="Сравнение" />
       {compare.length === 0 ? (
         <p className="mt-6 text-brand-muted">
-          Нет товаров для сравнения. Перейдите в{" "}
+          {applyRussianNbsp("Нет товаров для сравнения. Перейдите в")}{" "}
           <Link href="/catalog" className="text-brand-accent">
             каталог
           </Link>
@@ -106,7 +124,7 @@ export default function ComparePage() {
                 checked={onlyDiff}
                 onChange={(e) => setOnlyDiff(e.target.checked)}
               />
-              Показать только различия
+              {applyRussianNbsp("Показать только различия")}
             </label>
           </div>
           <table className="min-w-full text-left text-sm">
@@ -128,9 +146,12 @@ export default function ComparePage() {
                 <tr className="border-t border-brand-border" key={row.name}>
                   <td className="sticky left-0 bg-white px-4 py-3 font-medium">{row.name}</td>
                   {row.values.map((value, idx) => {
-                    const baseline = getMostFrequentValue(row.values);
-                    const hasDiff = new Set(row.values).size > 1;
-                    const isDifferent = hasDiff && baseline !== null && value !== baseline;
+                    const stats = rowStatsMap.get(row.name);
+                    const isDifferent =
+                      Boolean(stats?.hasDiff) &&
+                      stats?.baseline !== null &&
+                      stats?.baseline !== undefined &&
+                      value !== stats.baseline;
                     return (
                       <td
                         key={`${row.name}-${idx}`}

@@ -1,4 +1,38 @@
 const NBSP = "\u00a0";
+const SERVICE_WORDS = [
+  "в",
+  "к",
+  "с",
+  "у",
+  "о",
+  "и",
+  "а",
+  "из",
+  "от",
+  "до",
+  "за",
+  "на",
+  "по",
+  "под",
+  "над",
+  "об",
+  "без",
+  "для",
+  "при",
+  "про",
+  "со",
+  "во",
+  "ко",
+  "же",
+  "ли",
+  "бы",
+  "ль",
+  "б",
+  "ж",
+  "не",
+  "ни",
+];
+const SERVICE_WORDS_PATTERN = SERVICE_WORDS.join("|");
 
 /**
  * Небольшая типографика для UI-текстов:
@@ -8,8 +42,8 @@ const NBSP = "\u00a0";
  */
 export function applyRussianNbsp(text: string): string {
   return text
-    .replace(/(^|\s)([ВвКкСсУуОоИиАа])\s+/g, `$1$2${NBSP}`)
-    .replace(/\b([Бб]ы|[Лл]и)\s+/g, `$1${NBSP}`)
+    .replace(new RegExp(`(^|\\s)(${SERVICE_WORDS_PATTERN})\\s+`, "giu"), `$1$2${NBSP}`)
+    .replace(/№\s+/gu, `№${NBSP}`)
     .replace(/(\d)\s+(%|кг|г|л|м|см|мм|м²|м³)\b/g, `$1${NBSP}$2`);
 }
 

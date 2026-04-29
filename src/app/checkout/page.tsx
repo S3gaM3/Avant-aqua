@@ -3,6 +3,7 @@ import { Section } from "@/components/ui/Section";
 import { PageIntro } from "@/components/sections/PageIntro";
 import { Button } from "@/components/ui/Button";
 import { CheckoutForm } from "@/components/checkout/CheckoutForm";
+import { applyRussianNbsp } from "@/lib/ru-typography";
 
 export const metadata: Metadata = {
   title: "Оформление заказа",
@@ -14,8 +15,9 @@ export default function CheckoutPage() {
     <Section className="bg-brand-surface">
       <PageIntro title="Оформление заказа" current="Оформление заказа" />
       <p className="mt-6 text-lg text-brand-muted">
-        Вы заполняете данные на этой странице, а заказ создаётся в WooCommerce через REST API. После
-        создания заказа можно перейти к оплате.
+        {applyRussianNbsp(
+          "Вы заполняете данные на этой странице, а заказ создаётся в WooCommerce через REST API. После создания заказа можно перейти к оплате.",
+        )}
       </p>
 
       <div className="mt-10">

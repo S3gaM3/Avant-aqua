@@ -1,3 +1,5 @@
+import { applyRussianNbsp } from "@/lib/ru-typography";
+
 export type LeadPayload = {
   name: string;
   phone: string;
@@ -29,23 +31,23 @@ export function validateLeadPayload(rawPayload: LeadPayload): LeadErrors {
   const errors: LeadErrors = {};
 
   if (payload.name.length < 2) {
-    errors.name = "Укажите имя (минимум 2 символа)";
+    errors.name = applyRussianNbsp("Укажите имя (минимум 2 символа)");
   }
 
   if (!phoneRegex.test(payload.phone)) {
-    errors.phone = "Введите корректный телефон";
+    errors.phone = applyRussianNbsp("Введите корректный телефон");
   }
 
   if (payload.email.length > 0 && !emailRegex.test(payload.email)) {
-    errors.email = "Введите корректный email";
+    errors.email = applyRussianNbsp("Введите корректный email");
   }
 
   if (payload.message.length > 0 && payload.message.length < 10) {
-    errors.message = "Если заполняете сообщение, укажите минимум 10 символов";
+    errors.message = applyRussianNbsp("Если заполняете сообщение, укажите минимум 10 символов");
   }
 
   if (!payload.agree) {
-    errors.agree = "Нужно согласие на обработку персональных данных";
+    errors.agree = applyRussianNbsp("Нужно согласие на обработку персональных данных");
   }
 
   return errors;

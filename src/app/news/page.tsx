@@ -4,6 +4,7 @@ import { Section } from "@/components/ui/Section";
 import { PageIntro } from "@/components/sections/PageIntro";
 import { fetchPosts } from "@/lib/wordpress";
 import type { Metadata } from "next";
+import { applyRussianNbsp } from "@/lib/ru-typography";
 
 export const revalidate = 600;
 
@@ -20,7 +21,9 @@ export default async function NewsIndexPage() {
       <PageIntro
         title="Новости"
         current="Новости"
-        description="Уведомления, графики работы, отраслевые публикации и практические материалы."
+        description={applyRussianNbsp(
+          "Уведомления, графики работы, отраслевые публикации и практические материалы.",
+        )}
       />
 
       <ul className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">

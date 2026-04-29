@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getWooCommerceCredentials, getWordPressUrl } from "@/lib/env";
+import { applyRussianNbsp } from "@/lib/ru-typography";
 
 type CouponApiItem = {
   code: string;
@@ -29,13 +30,16 @@ export async function POST(request: Request) {
   const code = body?.code?.trim().toUpperCase() ?? "";
   const subtotal = Number(body?.subtotal ?? 0);
   if (!code) {
-    return NextResponse.json({ ok: false, message: "Введите промокод" }, { status: 400 });
+    return NextResponse.json(
+      { ok: false, message: applyRussianNbsp("Введите промокод") },
+      { status: 400 },
+    );
   }
 
   const url = couponUrl(code);
   if (!url) {
     return NextResponse.json(
-      { ok: false, message: "Купоны недоступны: Woo API не настроен" },
+      { ok: false, message: applyRussianNbsp("Купоны недоступны: Woo API не настроен.") },
       { status: 400 },
     );
   }
@@ -43,21 +47,26 @@ export async function POST(request: Request) {
   const res = await fetch(url, { headers: { Accept: "application/json" }, cache: "no-store" });
   if (!res.ok) {
     return NextResponse.json(
-      { ok: false, message: "Не удалось проверить промокод" },
+      { ok: false, message: applyRussianNbsp("Не удалось проверить промокод") },
       { status: 502 },
     );
   }
   const list = (await res.json()) as CouponApiItem[];
   const coupon = list.find((item) => item.code.toUpperCase() === code);
   if (!coupon) {
-    return NextResponse.json({ ok: false, message: "Промокод не найден" }, { status: 404 });
+    return NextResponse.json(
+      { ok: false, message: applyRussianNbsp("Промокод не найден") },
+      { status: 404 },
+    );
   }
 
   const minAmount = Number(coupon.minimum_amount || 0);
   if (minAmount > 0 && subtotal < minAmount) {
     return NextResponse.json({
       ok: false,
-      message: `Минимальная сумма для промокода: ${minAmount.toLocaleString("ru-RU")} ₽`,
+      message: applyRussianNbsp(
+        `Минимальная сумма для промокода: ${minAmount.toLocaleString("ru-RU")} ₽`,
+      ),
     });
   }
 
@@ -74,6 +83,6 @@ export async function POST(request: Request) {
     code,
     discountAmount,
     discountType: coupon.discount_type,
-    message: "Промокод применен",
+    message: applyRussianNbsp("Промокод применён"),
   });
 }

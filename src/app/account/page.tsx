@@ -9,6 +9,7 @@ import { authOptions } from "@/lib/auth-options";
 import { isAuthOAuthConfigured } from "@/lib/env";
 import { formatRub } from "@/lib/format";
 import { fetchAccountDashboard } from "@/lib/graphql-account";
+import { applyRussianNbsp } from "@/lib/ru-typography";
 
 export const metadata: Metadata = {
   title: "Личный кабинет",
@@ -69,7 +70,7 @@ export default async function AccountPage() {
         <h2 className="font-heading text-2xl text-brand-primary">История заказов</h2>
         {orders.length === 0 ? (
           <p className="mt-4 text-sm text-brand-muted">
-            Пока нет заказов. Когда вы оформите покупку, она появится здесь.
+            {applyRussianNbsp("Пока заказов нет. Когда вы оформите покупку, она появится здесь.")}
           </p>
         ) : (
           <ul className="mt-6 space-y-4">

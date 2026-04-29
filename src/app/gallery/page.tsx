@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/Card";
 import { Section } from "@/components/ui/Section";
 import { PageIntro } from "@/components/sections/PageIntro";
 import { StatsGrid } from "@/components/sections/StatsGrid";
+import { applyRussianNbsp } from "@/lib/ru-typography";
 
 export const metadata: Metadata = {
   title: "Галерея",
@@ -47,7 +48,13 @@ const projects = [
     city: "Москва и МО",
     details: "Регламентные работы, контроль параметров и оперативное реагирование.",
   },
-];
+].map((project) => ({
+  ...project,
+  title: applyRussianNbsp(project.title),
+  tag: applyRussianNbsp(project.tag),
+  city: applyRussianNbsp(project.city),
+  details: applyRussianNbsp(project.details),
+}));
 
 export default function GalleryPage() {
   return (
@@ -55,14 +62,16 @@ export default function GalleryPage() {
       <PageIntro
         title="Галерея проектов"
         current="Галерея"
-        description="Подборка типовых кейсов по частным и коммерческим объектам. Для каждого проекта можно запросить состав оборудования, сроки и формат сервисного сопровождения."
+        description={applyRussianNbsp(
+          "Подборка типовых кейсов по частным и коммерческим объектам. Для каждого проекта можно запросить состав оборудования, сроки и формат сервисного сопровождения.",
+        )}
       />
       <div className="mt-8">
         <StatsGrid
           items={[
-            { value: "500+", label: "Реализованных проектов" },
-            { value: "127", label: "Объектов на сервисе" },
-            { value: "25+", label: "Лет практического опыта" },
+            { value: "500+", label: applyRussianNbsp("Реализованных проектов") },
+            { value: "127", label: applyRussianNbsp("Объектов на сервисе") },
+            { value: "25+", label: applyRussianNbsp("Лет практического опыта") },
           ]}
         />
       </div>
@@ -92,8 +101,9 @@ export default function GalleryPage() {
           Нужен похожий проект?
         </h3>
         <p className="mt-3 text-sm leading-relaxed text-brand-muted">
-          Отправьте параметры объекта — подготовим ориентировочное решение и коммерческое
-          предложение по этапам.
+          {applyRussianNbsp(
+            "Отправьте параметры объекта — подготовим ориентировочное решение и коммерческое предложение по этапам.",
+          )}
         </p>
         <Link
           href="/contacts"

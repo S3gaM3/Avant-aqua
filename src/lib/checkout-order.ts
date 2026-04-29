@@ -1,4 +1,5 @@
 import type { CartLine } from "@/lib/stores/cart-store";
+import { applyRussianNbsp } from "@/lib/ru-typography";
 
 export type CheckoutCustomer = {
   firstName: string;
@@ -34,16 +35,17 @@ export function validateCreateOrderPayload(payload: CreateOrderPayload): Checkou
   const errors: CheckoutOrderErrors = {};
   const c = payload.customer;
 
-  if (!hasValue(c.firstName)) errors.firstName = "Укажите имя";
-  if (!hasValue(c.lastName)) errors.lastName = "Укажите фамилию";
-  if (!phoneRegex.test(c.phone.trim())) errors.phone = "Введите корректный телефон";
-  if (!emailRegex.test(c.email.trim())) errors.email = "Введите корректный email";
-  if (!hasValue(c.city)) errors.city = "Укажите город";
-  if (!hasValue(c.address1, 4)) errors.address1 = "Укажите адрес доставки";
-  if (!hasValue(c.postcode, 3)) errors.postcode = "Укажите индекс";
+  if (!hasValue(c.firstName)) errors.firstName = applyRussianNbsp("Укажите имя");
+  if (!hasValue(c.lastName)) errors.lastName = applyRussianNbsp("Укажите фамилию");
+  if (!phoneRegex.test(c.phone.trim()))
+    errors.phone = applyRussianNbsp("Введите корректный телефон");
+  if (!emailRegex.test(c.email.trim())) errors.email = applyRussianNbsp("Введите корректный email");
+  if (!hasValue(c.city)) errors.city = applyRussianNbsp("Укажите город");
+  if (!hasValue(c.address1, 4)) errors.address1 = applyRussianNbsp("Укажите адрес доставки");
+  if (!hasValue(c.postcode, 3)) errors.postcode = applyRussianNbsp("Укажите индекс");
 
   if (!Array.isArray(payload.lines) || payload.lines.length === 0) {
-    errors.lines = "Корзина пуста";
+    errors.lines = applyRussianNbsp("Корзина пуста");
   }
 
   return errors;

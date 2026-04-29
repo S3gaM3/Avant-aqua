@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { fetchPostBySlug } from "@/lib/wordpress";
 import type { Metadata } from "next";
+import { applyRussianNbsp } from "@/lib/ru-typography";
 
 export const revalidate = 600;
 
@@ -50,8 +51,9 @@ export default async function NewsArticlePage({ params }: Props) {
           Нужна консультация по вашему объекту?
         </h2>
         <p className="mt-3 text-sm text-brand-muted">
-          Свяжитесь с инженером «Авант» — поможем применить решения из статьи к вашему проекту и
-          подберём подходящее оборудование.
+          {applyRussianNbsp(
+            "Свяжитесь с инженером «Авант» — поможем применить решения из статьи к вашему проекту и подберём подходящее оборудование.",
+          )}
         </p>
         <div className="mt-4">
           <Button href="/contacts" size="sm">

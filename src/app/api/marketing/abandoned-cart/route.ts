@@ -1,6 +1,7 @@
 import { fetchWithTimeout, jsonError, jsonOk, parseJsonBody } from "@/lib/api-response";
 import { getAbandonedCartWebhookConfig } from "@/lib/env";
 import { buildAbandonedCartPayload } from "@/lib/marketing/abandoned-cart-provider";
+import { applyRussianNbsp } from "@/lib/ru-typography";
 
 type AbandonedCartPayload = {
   email?: string;
@@ -17,6 +18,7 @@ type AbandonedCartPayload = {
 const RATE_WINDOW_MS = 10 * 60 * 1000;
 const RATE_LIMIT_MAX = 8;
 const rateBucket = new Map<string, number[]>();
+let lastRateBucketCleanup = 0;
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -28,6 +30,18 @@ function getClientIp(request: Request): string {
 }
 
 function isRateLimited(key: string, now = Date.now()): boolean {
+  if (now - lastRateBucketCleanup > RATE_WINDOW_MS) {
+    for (const [bucketKey, history] of rateBucket) {
+      const fresh = history.filter((ts) => now - ts < RATE_WINDOW_MS);
+      if (fresh.length === 0) {
+        rateBucket.delete(bucketKey);
+      } else {
+        rateBucket.set(bucketKey, fresh);
+      }
+    }
+    lastRateBucketCleanup = now;
+  }
+
   const history = rateBucket.get(key) ?? [];
   const fresh = history.filter((ts) => now - ts < RATE_WINDOW_MS);
   if (fresh.length >= RATE_LIMIT_MAX) {
@@ -42,14 +56,14 @@ function isRateLimited(key: string, now = Date.now()): boolean {
 export async function POST(request: Request) {
   try {
     const body = await parseJsonBody<AbandonedCartPayload>(request);
-    if (!body) return jsonError("Ошибка обработки корзины", 400);
+    if (!body) return jsonError(applyRussianNbsp("Ошибка обработки корзины"), 400);
     const email = body.email?.trim().toLowerCase() ?? "";
     if (!isValidEmail(email)) {
-      return jsonError("Некорректный email", 400);
+      return jsonError(applyRussianNbsp("Некорректный email"), 400);
     }
     const ip = getClientIp(request);
     if (isRateLimited(`${ip}:${email}`)) {
-      return jsonError("Слишком много запросов. Попробуйте позже.", 429);
+      return jsonError(applyRussianNbsp("Слишком много запросов. Попробуйте позже."), 429);
     }
 
     const items = Array.isArray(body.items) ? body.items : [];
@@ -83,10 +97,10 @@ export async function POST(request: Request) {
 
     return jsonOk({
       ok: true,
-      message: "Контакт для брошенной корзины сохранен",
+      message: applyRussianNbsp("Контакт для брошенной корзины сохранён"),
     });
   } catch (error) {
     console.error("[api/marketing/abandoned-cart] failed", error);
-    return jsonError("Ошибка обработки корзины", 400);
+    return jsonError(applyRussianNbsp("Ошибка обработки корзины"), 400);
   }
 }

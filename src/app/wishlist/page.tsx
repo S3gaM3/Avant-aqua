@@ -5,6 +5,7 @@ import { Section } from "@/components/ui/Section";
 import { PageIntro } from "@/components/sections/PageIntro";
 import { ProductCard } from "@/components/catalog/ProductCard";
 import { usePreferencesStore } from "@/lib/stores/preferences-store";
+import { applyRussianNbsp } from "@/lib/ru-typography";
 
 export default function WishlistPage() {
   const wishlist = usePreferencesStore((s) => s.wishlist);
@@ -14,7 +15,7 @@ export default function WishlistPage() {
       <PageIntro title="Избранное" current="Избранное" />
       {wishlist.length === 0 ? (
         <p className="mt-6 text-brand-muted">
-          В избранном пока пусто. Перейдите в{" "}
+          {applyRussianNbsp("В избранном пока пусто. Перейдите в")}{" "}
           <Link href="/catalog" className="text-brand-accent">
             каталог
           </Link>

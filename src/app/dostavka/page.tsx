@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
 import { PageIntro } from "@/components/sections/PageIntro";
+import { applyRussianNbsp } from "@/lib/ru-typography";
 
 export const metadata: Metadata = {
   title: "Доставка и оплата",
@@ -10,10 +11,10 @@ export const metadata: Metadata = {
 
 const methods = [
   ["Самовывоз", "Бесплатно"],
-  ["Москва и МО", "От 1000 руб."],
-  ["Краснодар и край", "От 1000 руб."],
-  ["Крым", "50 руб./км"],
-  ["Россия и СНГ", "По тарифам ТК"],
+  ["Москва и МО", "от 1\u00a0000\u00a0₽"],
+  ["Краснодар и край", "от 1\u00a0000\u00a0₽"],
+  ["Крым", "50\u00a0₽/км"],
+  ["Россия и СНГ", "по\u00a0тарифам ТК"],
 ];
 
 export default function DeliveryPage() {
@@ -22,7 +23,9 @@ export default function DeliveryPage() {
       <PageIntro
         title="Доставка и оплата"
         current="Доставка и оплата"
-        description="Доставка оборудования для бассейнов и SPA по Москве, регионам России и СНГ."
+        description={applyRussianNbsp(
+          "Доставляем оборудование для бассейнов и SPA по Москве, регионам России и странам СНГ.",
+        )}
       />
 
       <section className="mt-8 grid gap-4 lg:grid-cols-2">
@@ -35,7 +38,9 @@ export default function DeliveryPage() {
               </span>
             </div>
             <p className="mt-2 text-sm text-brand-muted">
-              Подробности по срокам и логистике уточняются у менеджера.
+              {applyRussianNbsp(
+                "Срок и условия доставки согласуем после подтверждения заказа и адреса объекта.",
+              )}
             </p>
           </Card>
         ))}

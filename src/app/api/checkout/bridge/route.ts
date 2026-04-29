@@ -5,6 +5,7 @@ import {
   validateCheckoutBridgePayload,
 } from "@/lib/checkout";
 import { createCheckoutRedirect } from "@/server/checkout/service";
+import { applyRussianNbsp } from "@/lib/ru-typography";
 
 export async function POST(request: Request) {
   let payload: CheckoutBridgePayload;
@@ -13,7 +14,7 @@ export async function POST(request: Request) {
     payload = (await request.json()) as CheckoutBridgePayload;
   } catch {
     return NextResponse.json(
-      { ok: false, message: "Некорректный формат запроса" },
+      { ok: false, message: applyRussianNbsp("Некорректный формат запроса") },
       { status: 400 },
     );
   }
@@ -23,7 +24,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         ok: false,
-        message: "Не удалось подготовить корзину к оплате",
+        message: applyRussianNbsp("Не удалось подготовить корзину к оплате"),
         errors,
       },
       { status: 400 },
@@ -37,7 +38,9 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         ok: false,
-        message: "Не удалось сформировать переход к оплате. Проверьте настройки интеграции.",
+        message: applyRussianNbsp(
+          "Не удалось сформировать переход к оплате. Проверьте настройки интеграции.",
+        ),
       },
       { status: 500 },
     );

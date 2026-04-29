@@ -16,6 +16,7 @@ import {
 import { formatRub } from "@/lib/format";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
+import { applyRussianNbsp } from "@/lib/ru-typography";
 
 export default function CartPage() {
   const { lines, updateQty, removeItem, couponCode, discountAmount, applyCoupon, removeCoupon } =
@@ -115,7 +116,7 @@ export default function CartPage() {
                   if (!start) return;
                   if (start - e.changedTouches[0].clientX > 80) {
                     removeItem(line.productId);
-                    toast.info("Товар удален свайпом");
+                    toast.info(applyRussianNbsp("Товар удалён свайпом"));
                   }
                 }}
               >
@@ -145,7 +146,7 @@ export default function CartPage() {
                     type="button"
                     onClick={() => {
                       removeItem(line.productId);
-                      toast.info("Товар удален");
+                      toast.info(applyRussianNbsp("Товар удалён"));
                     }}
                     className="text-sm text-brand-accent hover:text-brand-primary"
                   >
@@ -174,7 +175,9 @@ export default function CartPage() {
                 />
               </div>
               {abandonedStatus === "saved" ? (
-                <p className="mt-2 text-xs text-[#12703a]">Контакт сохранен, напомним о корзине.</p>
+                <p className="mt-2 text-xs text-[#12703a]">
+                  {applyRussianNbsp("Контакт сохранён, напомним о корзине.")}
+                </p>
               ) : null}
               {abandonedStatus === "error" ? (
                 <p className="mt-2 text-xs text-[#b42318]">

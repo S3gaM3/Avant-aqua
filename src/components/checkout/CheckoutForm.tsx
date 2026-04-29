@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useCart } from "@/context/cart-context";
 import { trackEvent } from "@/lib/analytics";
 import { formatRub } from "@/lib/format";
+import { applyRussianNbsp } from "@/lib/ru-typography";
 import {
   hasCheckoutOrderErrors,
   type CheckoutCustomer,
@@ -65,7 +66,7 @@ export function CheckoutForm() {
     if (hasCheckoutOrderErrors(validationErrors)) {
       setErrors(validationErrors);
       setState("error");
-      setMessage("Исправьте ошибки и повторите попытку.");
+      setMessage(applyRussianNbsp("Исправьте ошибки и повторите попытку."));
       return;
     }
 
@@ -100,12 +101,16 @@ export function CheckoutForm() {
       if (!response.ok || !data.ok) {
         if (data.errors) setErrors(data.errors);
         setState("error");
-        setMessage(data.message ?? "Не удалось оформить заказ.");
+        setMessage(
+          data.message
+            ? applyRussianNbsp(data.message)
+            : applyRussianNbsp("Не удалось оформить заказ."),
+        );
         return;
       }
 
       setState("success");
-      setMessage(`Заказ №${data.orderId ?? ""} создан.`);
+      setMessage(applyRussianNbsp(`Заказ № ${data.orderId ?? ""} создан.`));
       setPaymentUrl(data.paymentUrl ?? null);
       trackEvent("purchase", {
         transaction_id: data.orderId,
@@ -114,28 +119,30 @@ export function CheckoutForm() {
       });
     } catch {
       setState("error");
-      setMessage("Ошибка сети. Повторите попытку.");
+      setMessage(applyRussianNbsp("Ошибка сети. Повторите попытку."));
     }
   };
 
   if (lines.length === 0) {
     return (
       <div className="rounded-[8px] border border-brand-border bg-white p-8 shadow-card">
-        <p className="text-brand-muted">Корзина пуста. Добавьте товары, чтобы оформить заказ.</p>
+        <p className="text-brand-muted">
+          {applyRussianNbsp("Корзина пуста. Добавьте товары, чтобы оформить заказ.")}
+        </p>
         <Link
           href="/catalog"
           className="mt-4 inline-flex text-brand-accent hover:text-brand-primary"
         >
-          Перейти в каталог
+          {applyRussianNbsp("Перейти в каталог")}
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr]">
+    <div className="grid gap-10 lg:grid-cols-[1.25fr_1fr]">
       <form
-        className="rounded-[8px] border border-brand-border bg-white p-8 shadow-card"
+        className="rounded-[8px] border border-brand-border bg-white p-5 shadow-card sm:p-8"
         onSubmit={async (e) => {
           e.preventDefault();
           await submit();
@@ -213,7 +220,9 @@ export function CheckoutForm() {
           ) : null}
         </div>
         <div className="mt-4">
-          <label className="block text-sm font-medium text-brand-text">Комментарий к заказу</label>
+          <label className="block text-sm font-medium text-brand-text">
+            {applyRussianNbsp("Комментарий к заказу")}
+          </label>
           <textarea
             rows={4}
             value={customer.comment}
@@ -237,20 +246,20 @@ export function CheckoutForm() {
             disabled={state === "loading"}
             className="inline-flex items-center justify-center rounded-[6px] bg-brand-accent px-8 py-3 text-base font-semibold text-white shadow-card transition-transform hover:-translate-x-1.5 hover:bg-[#d24f0a] disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {state === "loading" ? "Создание заказа..." : "Создать заказ"}
+            {state === "loading" ? "Создание заказа…" : "Создать заказ"}
           </button>
           {paymentUrl ? (
             <a
               href={paymentUrl}
               className="inline-flex items-center justify-center rounded-[6px] border border-brand-border bg-white px-8 py-3 text-base font-semibold text-brand-primary hover:border-brand-muted"
             >
-              Перейти к оплате
+              {applyRussianNbsp("Перейти к оплате")}
             </a>
           ) : null}
         </div>
       </form>
 
-      <aside className="rounded-[8px] border border-brand-border bg-brand-surface p-8 shadow-card">
+      <aside className="rounded-[8px] border border-brand-border bg-brand-surface p-5 shadow-card sm:p-8">
         <h3 className="font-heading text-xl font-semibold text-brand-primary">Ваш заказ</h3>
         <ul className="mt-4 space-y-3">
           {lines.map((line) => (

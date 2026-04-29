@@ -4,6 +4,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { applyRussianNbsp } from "@/lib/ru-typography";
 
 export function NewsletterForm() {
   const [email, setEmail] = useState("");
@@ -23,19 +24,27 @@ export function NewsletterForm() {
           });
           const data = (await res.json()) as { ok?: boolean; message?: string };
           if (!res.ok || !data.ok) {
-            toast.error(data.message ?? "Не удалось оформить подписку");
+            toast.error(
+              data.message
+                ? applyRussianNbsp(data.message)
+                : applyRussianNbsp("Не удалось оформить подписку"),
+            );
             return;
           }
-          toast.success(data.message ?? "Подписка оформлена");
+          toast.success(
+            data.message ? applyRussianNbsp(data.message) : applyRussianNbsp("Подписка оформлена"),
+          );
           setEmail("");
         } catch {
-          toast.error("Сервис подписки недоступен");
+          toast.error(applyRussianNbsp("Сервис подписки временно недоступен"));
         } finally {
           setLoading(false);
         }
       }}
     >
-      <label className="block text-xs text-white/80">Подписка на новости и акции</label>
+      <label className="block text-xs text-white/80">
+        {applyRussianNbsp("Подписка на новости и акции")}
+      </label>
       <div className="mt-2 flex gap-2">
         <Input
           type="email"
@@ -46,7 +55,7 @@ export function NewsletterForm() {
           className="w-full border-white/30 bg-white text-brand-text placeholder:text-brand-muted"
         />
         <Button type="submit" disabled={loading} size="sm" className="min-w-[62px]">
-          {loading ? "..." : "OK"}
+          {loading ? "…" : "OK"}
         </Button>
       </div>
     </form>
