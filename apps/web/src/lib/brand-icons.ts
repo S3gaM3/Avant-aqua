@@ -23,7 +23,7 @@ export const BRAND_ICONS = {
   calendar: "/icons/calendar.png",
   motor: "/icons/motor.png",
   worker: "/icons/worker.png",
-  pool: "/icons/swimmer.png",
+  pool: "/icons/pool.png",
   discount: "/icons/discount.png",
 } as const;
 

@@ -86,6 +86,7 @@ export const PRODUCT = {
   boughtTogether: "Часто берут вместе",
   descriptionFallback: "Подробное описание можно запросить у менеджера.",
   hit: "Хит",
+  discountBadge: (pct: number) => `−${pct}\u00a0%`,
   skuShort: "Арт.",
   details: "Подробнее",
   noPhoto: "Нет фото",
@@ -172,6 +173,9 @@ export const CHECKOUT = {
 
 /** Галерея. */
 export const GALLERY = {
+  metaTitle: "Галерея — AVANT AQUA",
+  metaDescription:
+    "Фото смонтированных систем, бассейнов и поставленного оборудования AVANT AQUA.",
   title: "Галерея",
   lead: "Фото смонтированных систем, бассейнов и поставленного оборудования.",
   emptyCategory: "В этой категории пока нет фото. Выберите другой раздел или посмотрите все работы.",
